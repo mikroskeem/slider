@@ -31,6 +31,10 @@
 #define GL_SILENCE_DEPRECATION
 #endif
 
+typedef struct value_change {
+  float v;
+} value_change_t;
+
 static float slider_value = 0.0f;
 
 static void error_cb(int n, const char *msg){
@@ -39,6 +43,11 @@ static void error_cb(int n, const char *msg){
 
 static void slider_cb(float f) {
   printf("Value: %d\n", ((int) (f * 100)));
+  value_change_t *ch = malloc(sizeof(value_change_t));
+  ch->v = f;
+
+  // TODO: feed it to the thread
+  free(ch);
 }
 
 int main(int argc, char **argv) {
