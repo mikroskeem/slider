@@ -1,4 +1,10 @@
 #!/bin/sh
 set -e
 
-clang -I/usr/local/Cellar/glfw/3.3.2/include -L/usr/local/Cellar/glfw/3.3.2/lib -L/usr/local/lib -lglfw -lglew -framework OpenGL -o slider slider.c
+glfw=/usr/local/Cellar/glfw/3.3.2
+
+if [ "$(uname -o)" = "Darwin" ]; then
+	clang -I$glfw/include -L$glfw/lib -L/usr/local/lib -lglfw -lglew -framework OpenGL -o slider slider.c
+else
+	gcc -lglfw -lglew -lGL -o slider slider.c
+fi
