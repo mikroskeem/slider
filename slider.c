@@ -54,6 +54,7 @@ int main(int argc, char **argv) {
   struct nk_glfw glfw = {0};
   static GLFWwindow *win;
   struct nk_context *ctx;
+  char *volume_buf = calloc(1, 32);
 
   glfwSetErrorCallback(error_cb);
   if (!glfwInit()) {
@@ -89,11 +90,13 @@ int main(int argc, char **argv) {
     nk_glfw3_new_frame(&glfw);
 
     if (nk_begin(ctx, "", nk_rect(0, 0, W_WIDTH, W_HEIGHT), 0)) {      
-      nk_layout_row_begin(ctx, NK_STATIC, 30, 2);
+      nk_layout_row_begin(ctx, NK_STATIC, 30, 400);
+
+      snprintf(volume_buf, 31, "slider %.2f:", slider_value);
       
-      nk_layout_row_push(ctx, 50);
-      nk_label(ctx, "slideeeee", NK_TEXT_CENTERED);
-      nk_layout_row_push(ctx, 110);
+      nk_layout_row_push(ctx, 75);
+      nk_label(ctx, volume_buf, NK_TEXT_CENTERED);
+      nk_layout_row_push(ctx, 300);
 
       float new_slider_value = slider_value;
       nk_slider_float(ctx, 0, &new_slider_value, 1.0f, 0.1f);
